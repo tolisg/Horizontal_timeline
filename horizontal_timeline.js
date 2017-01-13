@@ -125,7 +125,7 @@
             timeSpanNorm = timeSpan/timelineComponents['eventsMinLapse'],
             timeSpanNorm = Math.round(timeSpanNorm) + 4,
             totalWidth = timeSpanNorm*width,
-            self= this;
+            self= this,
             timelineWraperWidth = timelineComponents['timelineWrapper'].width();
             /* ===========custom max width not the original ============================== */
             if (timelineComponents['timelineDates'].length == 0) { 
@@ -133,7 +133,7 @@
             }
             var eventleft = parseInt(timelineComponents['timelineEvents'].eq(timelineComponents['timelineDates'].length-1).css('left').replace('px', ''));
             var eventwidth = parseInt(timelineComponents['timelineEvents'].eq(timelineComponents['timelineDates'].length-1).css('width').replace('px', ''));
-            totalWidth = eventleft +eventwidth +10;
+            totalWidth = eventleft +2*eventwidth;
             if (totalWidth < timelineWraperWidth) { totalWidth = timelineWraperWidth; }
             /* =========================================================================== */
             timelineComponents['eventsWrapper'].css('width', totalWidth+'px');
@@ -149,11 +149,7 @@
 
         getTranslateValue: function (timeline) {
             var timelineStyle = window.getComputedStyle(timeline.get(0), null),
-            timelineTranslate = timelineStyle.getPropertyValue("-webkit-transform") ||
-            timelineStyle.getPropertyValue("-moz-transform") ||
-            timelineStyle.getPropertyValue("-ms-transform") ||
-            timelineStyle.getPropertyValue("-o-transform") ||
-            timelineStyle.getPropertyValue("transform");
+            timelineTranslate = timelineStyle.getPropertyValue("transform");
 
             if( timelineTranslate.indexOf('(') >=0 ) {
                 var timelineTranslate = timelineTranslate.split('(')[1];
@@ -168,10 +164,6 @@
         },
 
         setTransformValue: function (element, property, value) {
-            element.style["-webkit-transform"] = property+"("+value+")";
-            element.style["-moz-transform"] = property+"("+value+")";
-            element.style["-ms-transform"] = property+"("+value+")";
-            element.style["-o-transform"] = property+"("+value+")";
             element.style["transform"] = property+"("+value+")";
         },
 
@@ -213,14 +205,10 @@
         }, 
 
         destroy: function () {
-            this.unbindEvents();
-        },
-
-        unbindEvents: function () {
             this.element.find('.cd-timeline-navigation').off('click', '.next');
             this.element.find('.cd-timeline-navigation').off('click', '.prev');
             this.element.find('.events-wrapper').children('.events').off('click', 'a');
-        }
+        },
     };
 
     /*
