@@ -5,7 +5,7 @@
     var Plugin = function (element, options) {
         this.element = element;
         var eventsMinDistance = options ? options : 90;
-        this.initTimeline(this.element, options);
+        this.initTimeline(this.element, eventsMinDistance);
     };
 
     Plugin.prototype = {
@@ -94,16 +94,16 @@
             //change .filling-line length according to the selected event
             var eventStyle = window.getComputedStyle(selectedEvent.get(0), null),
             eventLeft = eventStyle.getPropertyValue("left"),
-            eventWidth = eventStyle.getPropertyValue("width");
+            eventWidth = eventStyle.getPropertyValue("width"),
             eventLeft = Number(eventLeft.replace('px', '')) + Number(eventWidth.replace('px', ''))/2;
             var scaleValue = eventLeft/totWidth;
             this.setTransformValue(filling.get(0), 'scaleX', scaleValue);
         },
 
         setDatePosition: function (timelineComponents, min) {
-            toret =[];
+            var toret =[];
             toret[0] = 0;
-            sum = 0;
+            var sum = 0;
             var self=this;
             for (i = 0; i < timelineComponents['timelineDates'].length; i++) { 
                 var distance = self.daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][i]),
