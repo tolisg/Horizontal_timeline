@@ -128,9 +128,12 @@
             self= this;
             timelineWraperWidth = timelineComponents['timelineWrapper'].width();
             /* ===========custom max width not the original ============================== */
+            if (timelineComponents['timelineDates'].length == 0) { 
+            	return totalWidth;
+            }
             var eventleft = parseInt(timelineComponents['timelineEvents'].eq(timelineComponents['timelineDates'].length-1).css('left').replace('px', ''));
             var eventwidth = parseInt(timelineComponents['timelineEvents'].eq(timelineComponents['timelineDates'].length-1).css('width').replace('px', ''));
-            totalWidth = eventleft +eventwidth;
+            totalWidth = eventleft +eventwidth +10;
             if (totalWidth < timelineWraperWidth) { totalWidth = timelineWraperWidth; }
             /* =========================================================================== */
             timelineComponents['eventsWrapper'].css('width', totalWidth+'px');
