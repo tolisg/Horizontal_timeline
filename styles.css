@@ -1,220 +1,131 @@
 /*==============================Horizontal Timeleine========================================================================*/
 
-.cd-horizontal-timeline {
-  opacity: 0;
-  margin: 0 auto;
-  -webkit-transition: opacity 0.2s;
-  -moz-transition: opacity 0.2s;
-  transition: opacity 0.2s;
-}
-.cd-horizontal-timeline.loaded {
-  /* show the timeline after events position has been set (using JavaScript) */
-  opacity: 1;
-}
-.cd-horizontal-timeline .timeline {
-  position: relative;
-  height: 50px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+.cd-horizontal-timeline .horizontal-timeline {
+    position: relative;
+    height: 75px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 .cd-horizontal-timeline .events-wrapper {
-  position: relative;
-  height: 100%;
-  margin: 0 40px;
-  overflow: hidden;
+    position: relative;
+    height: 100%;
+    margin: 0 40px;
+    overflow: hidden;
 }
-.cd-horizontal-timeline .events-wrapper::after, .cd-horizontal-timeline .events-wrapper::before {
-  /* these are used to create a shadow effect at the sides of the timeline */
-  content: '';
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  height: 100%;
-  width: 20px;
+.cd-horizontal-timeline .events-wrapper::after,
+.cd-horizontal-timeline .events-wrapper::before {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    height: 100%;
+    width: 20px;
 }
 .cd-horizontal-timeline .events {
-  /* this is the grey line/timeline */
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  top: 60%;
-  height: 2px;
-  /* width will be set using JavaScript */
-  background: #5a5a5a;
-  -webkit-transition: -webkit-transform 0.4s;
-  -moz-transition: -moz-transform 0.4s;
-  transition: transform 0.4s;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 66%;
+    height: 2px;
+    background: lightgrey;
+    transition: transform 0.4s;
 }
 .cd-horizontal-timeline .filling-line {
-  /* this is used to create the green line filling the timeline */
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #ab0d25;
-  -webkit-transform: scaleX(0);
-  -moz-transform: scaleX(0);
-  -ms-transform: scaleX(0);
-  -o-transform: scaleX(0);
-  transform: scaleX(0);
-  -webkit-transform-origin: left center;
-  -moz-transform-origin: left center;
-  -ms-transform-origin: left center;
-  -o-transform-origin: left center;
-  transform-origin: left center;
-  -webkit-transition: -webkit-transform 0.3s;
-  -moz-transition: -moz-transform 0.3s;
-  transition: transform 0.3s;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #ab0d25;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.3s;
 }
 .cd-horizontal-timeline .events a {
-  position: absolute;
-  bottom: 0;
-  z-index: 2;
-  text-align: center;
-  font-size: 1.3rem;
-  padding-bottom: 15px;
-  color: #ab0d25;
-  /* fix bug on Safari - text flickering while timeline translates */
-  -webkit-transform: translateZ(0);
-  -moz-transform: translateZ(0);
-  -ms-transform: translateZ(0);
-  -o-transform: translateZ(0);
-  transform: translateZ(0);
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    text-align: center;
+    padding-bottom: 15px;
+    color: #ab0d25;
+    transform: translateZ(0);
 }
 .cd-horizontal-timeline .events a::after {
-  /* this is used to create the event spot */
-  content: '';
-  position: absolute;
-  left: 50%;
-  right: auto;
-  -webkit-transform: translateX(-50%);
-  -moz-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  -o-transform: translateX(-50%);
-  transform: translateX(-50%);
-  bottom: -6px;
-  height: 12px;
-  width: 12px;
-  border-radius: 50%;
-  border: 2px solid #5a5a5a;
-  background-color: #f8f8f8;
-  -webkit-transition: background-color 0.3s, border-color 0.3s;
-  -moz-transition: background-color 0.3s, border-color 0.3s;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-.no-touch .cd-horizontal-timeline .events a:hover::after {
-  background-color: #ab0d25;
-  border-color: #ab0d25;
+    content: '';
+    position: absolute;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    bottom: -6px;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    border: 2px solid lightgrey;
+    background-color: #f8f8f8;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 .cd-horizontal-timeline .events a.selected {
-  pointer-events: none;
+    pointer-events: none;
 }
 .cd-horizontal-timeline .events a.selected::after {
-  background-color: #ab0d25;
-  border-color: #ab0d25;
+    background-color: #ab0d25;
+    border-color: #ab0d25;
 }
 .cd-horizontal-timeline .events a.older-event::after {
-  border-color: #ab0d25;
+    border-color: #ab0d25;
 }
-
 .cd-timeline-navigation a {
-  /* these are the left/right arrows to navigate the timeline */
-  position: absolute;
-  z-index: 1;
-  top: 60%;
-  bottom: auto;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  transform: translateY(-50%);
-  height: 34px;
-  width: 34px;
-  border-radius: 50%;
-  border: 2px solid #ab0d25;
-  /* replace text with an icon */
-  overflow: hidden;
-  color: transparent;
-  text-indent: 100%;
-  white-space: nowrap;
-  -webkit-transition: border-color 0.3s;
-  -moz-transition: border-color 0.3s;
-  transition: border-color 0.3s;
+    position: absolute;
+    z-index: 1;
+    top: 66%;
+    bottom: auto;
+    transform: translateY(-50%);
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+    border: 2px solid #ab0d25;
+    overflow: hidden;
+    color: transparent;
+    text-indent: 100%;
+    white-space: nowrap;
+    transition: border-color 0.3s;
 }
 .cd-timeline-navigation a::after {
-  /* arrow icon */
-  content: '';
-  position: absolute;
-  height: 16px;
-  width: 16px;
-  left: 50%;
-  top: 50%;
-  bottom: auto;
-  right: auto;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -ms-transform: translateX(-50%) translateY(-50%);
-  -o-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
-  background: url(../img/cd-arrow.svg) no-repeat 0 0;
+    content: '';
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    transform: translateX(-50%) translateY(-50%);
+    background: url(../img/cd-arrow.svg) no-repeat 0 0;
 }
 .cd-timeline-navigation a.prev {
-  left: 0;
-  -webkit-transform: translateY(-50%) rotate(180deg);
-  -moz-transform: translateY(-50%) rotate(180deg);
-  -ms-transform: translateY(-50%) rotate(180deg);
-  -o-transform: translateY(-50%) rotate(180deg);
-  transform: translateY(-50%) rotate(180deg);
+    left: 0;
+    transform: translateY(-50%) rotate(180deg);
 }
 .cd-timeline-navigation a.next {
-  right: 0;
-}
-.no-touch .cd-timeline-navigation a:hover {
-  border-color: #ab0d25;
+    right: 0;
 }
 .cd-timeline-navigation a.inactive {
-  cursor: not-allowed;
-  border: 2px solid #5a5a5a !important;
-  opacity: 0.5;
+    cursor: not-allowed;
+    border: 2px solid lightgrey !important;
+    opacity: 0.5;
 }
-
 .cd-timeline-navigation a.inactive::after {
-  background-position: 0 -16px;
+    background-position: 0 -16px;
 }
-.no-touch .cd-timeline-navigation a.inactive:hover {
-  border-color: #dfdfdf;
+.horizontal-timeline ol,
+.horizontal-timeline ul {
+    list-style: none;
 }
-
-.hor-timeline section {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-
-.hor-timeline ol, .hor-timeline ul {
-  list-style: none;
-}
-.hor-timeline blockquote, .hor-timeline q {
-  quotes: none;
-}
-.hor-timeline blockquote:before, .hor-timeline blockquote:after,
-.hor-timeline q:before, .hor-timeline q:after {
-  content: '';
-  content: none;
-}
-.hor-timeline table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-.hor-timeline a:link {
-  text-decoration: none !important;
-  font-size: 14px !important;
-  font-weight: bold !important;
+.horizontal-timeline a:link {
+    text-decoration: none !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    line-height: 14px;
 }
