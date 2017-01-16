@@ -40,7 +40,9 @@
                 //detect click on the prev arrow
                 timelineComponents['timelineNavigation'].on('click', '.prev', function(event){
                     event.preventDefault();
-                    self.updateSlide(timelineComponents, timelineTotWidth, 'prev', eventsMinDistance);
+                    if(!$(this).hasClass('inactive')) {
+                        self.updateSlide(timelineComponents, timelineTotWidth, 'prev', eventsMinDistance);
+                    }
                 });
                 //detect click on the a single event - show new event content
                 timelineComponents['eventsWrapper'].on('click', 'a', function(event){
@@ -129,12 +131,17 @@
             timelineWraperWidth = timelineComponents['timelineWrapper'].width();
             /* ===========custom max width not the original ============================== */
             if (timelineComponents['timelineDates'].length == 0) { 
-            	return totalWidth;
+                return totalWidth;
             }
             var eventleft = parseInt(timelineComponents['timelineEvents'].eq(timelineComponents['timelineDates'].length-1).css('left').replace('px', ''));
             var eventwidth = parseInt(timelineComponents['timelineEvents'].eq(timelineComponents['timelineDates'].length-1).css('width').replace('px', ''));
             totalWidth = eventleft +2*eventwidth;
-            if (totalWidth < timelineWraperWidth) { totalWidth = timelineWraperWidth; }
+            if (totalWidth < timelineWraperWidth) { 
+                totalWidth = timelineWraperWidth;
+                // timelineComponents['timelineNavigation'].find('.next').addClass('inactive');
+            } else {
+                timelineComponents['timelineNavigation'].find('.next').removeClass('inactive');
+            }
             /* =========================================================================== */
             timelineComponents['eventsWrapper'].css('width', totalWidth+'px');
             self.updateFilling(timelineComponents['eventsWrapper'].find('a.selected'), timelineComponents['fillingLine'], totalWidth);
