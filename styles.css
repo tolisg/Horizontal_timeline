@@ -90,7 +90,7 @@
     color: transparent;
     text-indent: 100%;
     white-space: nowrap;
-    transition: border-color 0.3s;
+    transition: border-color 0.8s;
 }
 .cd-timeline-navigation a::after {
     content: '';
