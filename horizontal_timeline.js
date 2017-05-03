@@ -1,3 +1,5 @@
+/* Horizontal-timeline*/
+
 ;(function ($, window, document, undefined) {
 
     var pluginName = "horizontal_timeline",
@@ -13,8 +15,8 @@
             var eventsMinDistance = options;
             var self=this;
             timelines.each(function(){
-                var timeline = $(this),
-                timelineComponents = {};
+                var timeline = $(this);
+                var timelineComponents = {};
                 //cache timeline components 
                 timelineComponents['timelineWrapper'] = timeline.find('.events-wrapper');
                 timelineComponents['eventsWrapper'] = timelineComponents['timelineWrapper'].children('.events');
@@ -58,8 +60,8 @@
         updateSlide: function (timelineComponents, timelineTotWidth, string, eventsMinDistance) {
             //retrieve translateX value of timelineComponents['eventsWrapper']
             var self = this;
-            var translateValue = self.getTranslateValue(timelineComponents['eventsWrapper']),
-            wrapperWidth = Number(timelineComponents['timelineWrapper'].css('width').replace('px', ''));
+            var translateValue = self.getTranslateValue(timelineComponents['eventsWrapper']);
+            var wrapperWidth = Number(timelineComponents['timelineWrapper'].css('width').replace('px', ''));
             //translate the timeline to the left('next')/right('prev') 
             if(string == 'next'){
                 this.translateTimeline(timelineComponents, translateValue - wrapperWidth + eventsMinDistance, wrapperWidth - timelineTotWidth)
@@ -71,11 +73,11 @@
 
         updateTimelinePosition: function (string, event, timelineComponents) {
             //translate timeline to the left/right according to the position of the selected event
-            var eventStyle = window.getComputedStyle(event.get(0), null),
-            eventLeft = Number(eventStyle.getPropertyValue("left").replace('px', '')),
-            timelineWidth = Number(timelineComponents['timelineWrapper'].css('width').replace('px', '')),
-            timelineTotWidth = Number(timelineComponents['eventsWrapper'].css('width').replace('px', '')),
-            self = this;
+            var eventStyle = window.getComputedStyle(event.get(0), null);
+            var eventLeft = Number(eventStyle.getPropertyValue("left").replace('px', ''));
+            var timelineWidth = Number(timelineComponents['timelineWrapper'].css('width').replace('px', ''));
+            var timelineTotWidth = Number(timelineComponents['eventsWrapper'].css('width').replace('px', ''));
+            var self = this;
             var timelineTranslate = self.getTranslateValue(timelineComponents['eventsWrapper']);
             if( (string == 'next' && eventLeft > timelineWidth - timelineTranslate) || (string == 'prev' && eventLeft < - timelineTranslate) ) {
                self.translateTimeline(timelineComponents, - eventLeft + timelineWidth/2, timelineWidth - timelineTotWidth);
@@ -94,10 +96,10 @@
 
         updateFilling: function (selectedEvent, filling, totWidth) {
             //change .filling-line length according to the selected event
-            var eventStyle = window.getComputedStyle(selectedEvent.get(0), null),
-            eventLeft = eventStyle.getPropertyValue("left"),
-            eventWidth = eventStyle.getPropertyValue("width"),
-            eventLeft = Number(eventLeft.replace('px', '')) + Number(eventWidth.replace('px', ''))/2;
+            var eventStyle = window.getComputedStyle(selectedEvent.get(0), null);
+            var eventLeft = eventStyle.getPropertyValue("left");
+            var eventWidth = eventStyle.getPropertyValue("width");
+            var eventLeft = Number(eventLeft.replace('px', '')) + Number(eventWidth.replace('px', ''))/2;
             var scaleValue = eventLeft/totWidth;
             this.setTransformValue(filling.get(0), 'scaleX', scaleValue);
         },
@@ -108,10 +110,10 @@
             var sum = 0;
             var self=this;
             for (i = 0; i < timelineComponents['timelineDates'].length; i++) { 
-                var distance = self.daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][i]),
+                var distance = self.daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][i]);
                     /*================================Custome Code===================================================*/
                     //to reduce tha max distance between 2 events we set tha max distance
-                    distanceNorm = Math.round(distance/timelineComponents['eventsMinLapse']);
+                    var distanceNorm = Math.round(distance/timelineComponents['eventsMinLapse']);
                     toret[i+1] = distanceNorm;
                     var diff= toret[i+1]- toret[i];
                     if (diff > 4){ sum += 5; }
@@ -123,12 +125,12 @@
         },
 
         setTimelineWidth: function (timelineComponents, width) {
-            var timeSpan = this.daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][timelineComponents['timelineDates'].length-1]),
-            timeSpanNorm = timeSpan/timelineComponents['eventsMinLapse'],
-            timeSpanNorm = Math.round(timeSpanNorm) + 4,
-            totalWidth = timeSpanNorm*width,
-            self= this,
-            timelineWraperWidth = timelineComponents['timelineWrapper'].width();
+            var timeSpan = this.daydiff(timelineComponents['timelineDates'][0], timelineComponents['timelineDates'][timelineComponents['timelineDates'].length-1]);
+            var timeSpanNorm = timeSpan/timelineComponents['eventsMinLapse'];
+            var timeSpanNorm = Math.round(timeSpanNorm) + 4;
+            var totalWidth = timeSpanNorm*width;
+            var self= this;
+            var timelineWraperWidth = timelineComponents['timelineWrapper'].width();
             /* ===========custom max width not the original ============================== */
             if (timelineComponents['timelineDates'].length == 0) { 
                 return totalWidth;
@@ -155,8 +157,8 @@
         },
 
         getTranslateValue: function (timeline) {
-            var timelineStyle = window.getComputedStyle(timeline.get(0), null),
-            timelineTranslate = timelineStyle.getPropertyValue("transform");
+            var timelineStyle = window.getComputedStyle(timeline.get(0), null);
+            var timelineTranslate = timelineStyle.getPropertyValue("transform");
 
             if( timelineTranslate.indexOf('(') >=0 ) {
                 var timelineTranslate = timelineTranslate.split('(')[1];
@@ -178,17 +180,17 @@
         parseDate: function (events) {
             var dateArrays = [];
             events.each(function(){
-                var singleDate = $(this),
-                dateComp = singleDate.data('date').split('T');
+                var singleDate = $(this);
+                var dateComp = singleDate.data('date').split('T');
                 if( dateComp.length > 1 ) { //both DD.MM.YEAR and time are provided
-                    var dayComp = dateComp[0].split('.'),
-                    timeComp = dateComp[1].split(':');
+                    var dayComp = dateComp[0].split('.');
+                    var timeComp = dateComp[1].split(':');
                 } else if( dateComp[0].indexOf(':') >=0 ) { //only time is provide
-                    var dayComp = ["2000", "0", "0"],
-                    timeComp = dateComp[0].split(':');
+                    var dayComp = ["2000", "0", "0"];
+                    var timeComp = dateComp[0].split(':');
                 } else { //only DD.MM.YEAR
-                    var dayComp = dateComp[0].split('.'),
-                    timeComp = ["0", "0"];
+                    var dayComp = dateComp[0].split('.');
+                    var timeComp = ["0", "0"];
                 }
                 var newDate = new Date(dayComp[2], dayComp[1]-1, dayComp[0], timeComp[0], timeComp[1]);
                 dateArrays.push(newDate);
@@ -212,10 +214,12 @@
         }, 
 
         destroy: function () {
+            this.element.removeData();
             this.element.find('.cd-timeline-navigation').off('click', '.next');
             this.element.find('.cd-timeline-navigation').off('click', '.prev');
             this.element.find('.events-wrapper').children('.events').off('click', 'a');
-        },
+            this.element.removeClass('loaded');
+        }
     };
 
     /*
@@ -229,7 +233,7 @@
         if (plugin instanceof Plugin) {
             // if have options arguments, call plugin.init() again
             if (typeof options !== 'undefined') {
-                plugin.initTimeline(options);
+                plugin.initTimeline(this, options);
             }
         } else {
             plugin = new Plugin(this, options);
