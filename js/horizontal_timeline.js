@@ -144,6 +144,10 @@
                 timelineComponents['timelineNavigation'].find('.next').removeClass('inactive');
             }
             /* =========================================================================== */
+            if (timelineComponents['eventsWrapper'].find('a.selected').length == 0){
+                timelineComponents['eventsWrapper'].find('a').first().addClass('selected');
+                // throw new Error('You must have an <a> with class "selected"!');
+            }
             timelineComponents['eventsWrapper'].css('width', totalWidth+'px');
             self.updateFilling(timelineComponents['eventsWrapper'].find('a.selected'), timelineComponents['fillingLine'], totalWidth);
             self.updateTimelinePosition('next', timelineComponents['eventsWrapper'].find('a.selected'), timelineComponents);

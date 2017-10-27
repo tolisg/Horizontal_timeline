@@ -31,7 +31,7 @@ var data = {
 		"TIME": "17:15:48",
 		"STATUS": "Active",
 		"VERSION": 1,
-		"CURRENT": false
+		"CURRENT": true
 	},
 	{
 		"DATE": "22.12.2016",
@@ -73,7 +73,7 @@ var data = {
 		"TIME": "17:15:48",
 		"STATUS": "Active",
 		"VERSION": 7,
-		"CURRENT": true
+		"CURRENT": false
 	}
 	]
 };
