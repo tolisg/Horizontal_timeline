@@ -1,5 +1,4 @@
 /* Horizontal-timeline*/
-
 ;(function ($, window, document, undefined) {
 
     var pluginName = "horizontal_timeline",

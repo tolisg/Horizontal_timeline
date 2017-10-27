@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+   <title>Horizontal timeline</title>
+   <link rel="stylesheet" href="css/styles.css">
+   <script src="http://cdn.ractivejs.org/latest/ractive.js"></script>
+   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+   <script src="js/horizontal_timeline.js"></script>
+   <script src="js/scripts.js"></script>
+</head>
+<body>
+   <script type="text/template" id="template">
+      <div class="cd-horizontal-timeline">
+               <div class="horizontal-timeline">
+                  <div class="events-wrapper">
+                     <div class="events">
+                        <ol>
+                           {{#each TIMELINE_DATA}}
+                              <li title="Release date: {{DATE}}{{{'&#013;'}}}Time: {{TIME}}{{{'&#013;'}}}Status: {{STATUS}}">
+                                 <a href="javascript:;" class="{{CURRENT ? 'selected': ''}}" on-click="['LoadVersion']" data-date="{{DATE+'T'+TIME}}">Version: {{VERSION}}<br />
+                                    <span style="font-size:12px;">{{DATE}}</span>
+                                 </a>
+                              </li>
+                           {{/each}}
+                        </ol>
+                        <span class="filling-line" aria-hidden="true"></span>
+                     </div> 
+                  </div> 
+                  <ul class="cd-timeline-navigation">
+                     <li><a href="javascript:;" class="prev inactive">Prev</a></li>
+                     <li><a href="javascript:;" class="next inactive">Next</a></li>
+                  </ul> 
+               </div>
+            </div>
+   </script>
+</body>
+</html>
+
